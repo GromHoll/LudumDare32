@@ -22,9 +22,7 @@ namespace Model.Map {
         public IList<Terrain> GetTerrainsInRadius(HexCoord coord, int radius) {
             var result = new List<Terrain>();
             foreach (var terra in Map) {
-                var distance = Mathf.Sqrt(Mathf.Pow(coord.WorldX - terra.Coord.WorldX, 2) +
-                                          Mathf.Pow(coord.WorldY - terra.Coord.WorldY, 2));
-
+                var distance = coord.WorldDistance(terra.Coord);
                 if (distance <= radius*HexCoord.Y_SHIFT*2 + 0.01) {
                     result.Add(terra);
                 }

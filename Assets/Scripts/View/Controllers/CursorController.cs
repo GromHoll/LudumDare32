@@ -1,12 +1,12 @@
 using Model;
 using Model.Map;
+using Model.Unit;
 using UnityEditor;
 using UnityEngine;
 
 namespace View.Controllers {
     public class CursorController : MonoBehaviour {
 
-        private SpriteRenderer renderer;
         public MapController map;
 
         public GameObject upCursor;
@@ -15,6 +15,10 @@ namespace View.Controllers {
         public GameObject downCursor;
         public GameObject downLeftCursor;
         public GameObject upLeftCursor;
+
+        private SpriteRenderer renderer;
+        private AbstractUnit selectedUnit;
+
 
         public void Start() {
             renderer = GetComponent<SpriteRenderer>();
@@ -31,12 +35,14 @@ namespace View.Controllers {
                 }
             } else if (Input.GetMouseButtonDown(1)) {
                 renderer.enabled = false;
+                OffRoundCursors();
             }
         }
 
         private void UpdateRoundCursors(HexCoord coord) {
             var unit = map.Level.GetArmyUnitAt(coord);
             if (unit != null) {
+                selectedUnit = unit;
                 UpdateRoundCursor(coord.X,     coord.Y + 1,               upCursor);
                 UpdateRoundCursor(coord.X + 1, coord.Y + coord.X%2,       upRightCursor);
                 UpdateRoundCursor(coord.X + 1, coord.Y - (coord.X + 1)%2, downRightCursor);
@@ -44,12 +50,15 @@ namespace View.Controllers {
                 UpdateRoundCursor(coord.X - 1, coord.Y + coord.X%2,       upLeftCursor);
                 UpdateRoundCursor(coord.X - 1, coord.Y - (coord.X + 1)%2, downLeftCursor);
             } else {
-                upCursor.GetComponent<SpriteRenderer>().enabled = false;
-                upRightCursor.GetComponent<SpriteRenderer>().enabled = false;
-                downRightCursor.GetComponent<SpriteRenderer>().enabled = false;
-                downCursor.GetComponent<SpriteRenderer>().enabled = false;
-                upLeftCursor.GetComponent<SpriteRenderer>().enabled = false;
-                downLeftCursor.GetComponent<SpriteRenderer>().enabled = false;
+                if (selectedUnit != null) {
+                    var distance = coord.WorldDistance(selectedUnit.Coord);
+                    if (distance < 1.1f) {
+                        selectedUnit.Move(coord);
+                        Update();
+                        return;
+                    }
+                }
+                OffRoundCursors();
             }
         }
 
@@ -63,6 +72,16 @@ namespace View.Controllers {
                 return false;
             }
             return map.Level.IsEmptyHex(x, y);
+        }
+
+        private void OffRoundCursors() {
+            upCursor.GetComponent<SpriteRenderer>().enabled = false;
+            upRightCursor.GetComponent<SpriteRenderer>().enabled = false;
+            downRightCursor.GetComponent<SpriteRenderer>().enabled = false;
+            downCursor.GetComponent<SpriteRenderer>().enabled = false;
+            upLeftCursor.GetComponent<SpriteRenderer>().enabled = false;
+            downLeftCursor.GetComponent<SpriteRenderer>().enabled = false;
+            selectedUnit = null;
         }
 
     }

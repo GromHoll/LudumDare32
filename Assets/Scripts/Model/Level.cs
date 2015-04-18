@@ -97,5 +97,6 @@ namespace Model {
             unit = playerArmy.FirstOrDefault<AbstractUnit>(u => u.Coord.X == x && u.Coord.Y == y);
             return (unit == null);
         }
+
     }
 }

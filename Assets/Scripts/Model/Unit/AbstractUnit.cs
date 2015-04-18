@@ -15,5 +15,10 @@ namespace Model.Unit {
             AttackRadius = attackRadius;
         }
 
+        public void Move(HexCoord coord) {
+            Coord.X = coord.X;
+            Coord.Y = coord.Y;
+        }
+
     }
 }

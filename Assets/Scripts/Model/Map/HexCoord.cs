@@ -16,5 +16,10 @@ namespace Model.Map {
         public float WorldX { get { return X*X_SHIFT; } }
         public float WorldY { get { return 2*Y*Y_SHIFT + Y_SHIFT*(X%2); } }
 
+        public float WorldDistance(HexCoord other) {
+            return Mathf.Sqrt(Mathf.Pow(WorldX - other.WorldX, 2f) +
+                              Mathf.Pow(WorldY - other.WorldY, 2f));
+        }
+
     }
 }
