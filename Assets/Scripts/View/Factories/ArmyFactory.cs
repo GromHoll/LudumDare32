@@ -23,6 +23,5 @@ namespace View.Factories {
             return null;
         }
 
-
 	}
 }

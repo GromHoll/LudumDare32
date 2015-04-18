@@ -35,21 +35,34 @@ namespace View.Controllers {
         }
 
         private void UpdateRoundCursors(HexCoord coord) {
-            UpdateRoundCursor(coord.X,     coord.Y + 1,               upCursor);
-            UpdateRoundCursor(coord.X + 1, coord.Y + coord.X%2,       upRightCursor);
-            UpdateRoundCursor(coord.X + 1, coord.Y - (coord.X + 1)%2, downRightCursor);
-            UpdateRoundCursor(coord.X,     coord.Y - 1,               downCursor);
-            UpdateRoundCursor(coord.X - 1, coord.Y + coord.X%2,       upLeftCursor);
-            UpdateRoundCursor(coord.X - 1, coord.Y - (coord.X + 1)%2, downLeftCursor);
+            var unit = map.Level.GetArmyUnitAt(coord);
+            if (unit != null) {
+                UpdateRoundCursor(coord.X,     coord.Y + 1,               upCursor);
+                UpdateRoundCursor(coord.X + 1, coord.Y + coord.X%2,       upRightCursor);
+                UpdateRoundCursor(coord.X + 1, coord.Y - (coord.X + 1)%2, downRightCursor);
+                UpdateRoundCursor(coord.X,     coord.Y - 1,               downCursor);
+                UpdateRoundCursor(coord.X - 1, coord.Y + coord.X%2,       upLeftCursor);
+                UpdateRoundCursor(coord.X - 1, coord.Y - (coord.X + 1)%2, downLeftCursor);
+            } else {
+                upCursor.GetComponent<SpriteRenderer>().enabled = false;
+                upRightCursor.GetComponent<SpriteRenderer>().enabled = false;
+                downRightCursor.GetComponent<SpriteRenderer>().enabled = false;
+                downCursor.GetComponent<SpriteRenderer>().enabled = false;
+                upLeftCursor.GetComponent<SpriteRenderer>().enabled = false;
+                downLeftCursor.GetComponent<SpriteRenderer>().enabled = false;
+            }
         }
 
         private void UpdateRoundCursor(int x, int y, GameObject cursor) {
             var renderer = cursor.GetComponent<SpriteRenderer>();
+            renderer.enabled = IsRoundCursorNeedsShow(x, y);
+        }
+
+        private bool IsRoundCursorNeedsShow(int x, int y) {
             if (x < 0 || x >= map.Level.Map.Width || y < 0 || y >= map.Level.Map.Height) {
-                renderer.enabled = false;
-            } else {
-                renderer.enabled = true;
+                return false;
             }
+            return map.Level.IsEmptyHex(x, y);
         }
 
     }

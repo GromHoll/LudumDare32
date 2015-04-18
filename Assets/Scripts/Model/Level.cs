@@ -3,6 +3,7 @@ using Model.Unit;
 using Model.Unit.Enemy;
 using Model.Unit.Player;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Model {
     public class Level {
@@ -67,7 +68,7 @@ namespace Model {
                 new Airplane(1, 2),
                 new Soldier(1, 1),
                 new Soldier(2, 1),
-                new Soldier(1, 3)
+                new Soldier(0, 3)
             };
         }
 
@@ -83,6 +84,18 @@ namespace Model {
                     terra.Control = ControlType.ENEMY;
                 }
             }
+        }
+
+        public AbstractUnit GetArmyUnitAt(HexCoord coord) {
+            return playerArmy.FirstOrDefault<AbstractUnit>(unit => unit.Coord.Coord == coord.Coord);
+        }
+
+        public bool IsEmptyHex(int x, int y) {
+            var unit = enemies.FirstOrDefault<AbstractUnit>(u => u.Coord.X == x && u.Coord.Y == y);
+            if (unit != null) { return false; }
+
+            unit = playerArmy.FirstOrDefault<AbstractUnit>(u => u.Coord.X == x && u.Coord.Y == y);
+            return (unit == null);
         }
     }
 }
