@@ -12,12 +12,14 @@ namespace View.Controllers {
         public StructuresFactory structuresFactory;
         public ArmyFactory armyFactory;
 
+        public Level Level { get; set; }
+
         void Start() {
-            var level = new Level();
-            MoveMapToCenter(level.Map);
-            terrainFactory.CreateTerrain(level.Map);
-            structuresFactory.CreateStructures(level.Enemies);
-            armyFactory.CreateArmy(level.PlayerArmy);
+            Level = new Level();
+            MoveMapToCenter(Level.Map);
+            terrainFactory.CreateTerrain(Level.Map);
+            structuresFactory.CreateStructures(Level.Enemies);
+            armyFactory.CreateArmy(Level.PlayerArmy);
         }
 
         private void MoveMapToCenter(TerrainMap map) {
@@ -26,11 +28,6 @@ namespace View.Controllers {
             coord.x -= HexCoord.X_SHIFT;
             coord.z = -10;
             Camera.main.transform.position = coord;
-        }
-
-        void Update() {
-
-
         }
     }
 }
