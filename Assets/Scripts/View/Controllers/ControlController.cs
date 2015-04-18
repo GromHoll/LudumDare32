@@ -11,15 +11,21 @@ namespace View.Controllers {
 
         public Terra Terrain { get; set; }
 
+        private SpriteRenderer renderer;
+
+        public void Start() {
+            renderer = GetComponent<SpriteRenderer>();
+        }
+
 		void Update() {
             if (Terrain.Control == ControlType.FREE) {
-                GetComponent<SpriteRenderer>().enabled = false;
+                renderer.enabled = false;
             } else {
                 GetComponent<SpriteRenderer>().enabled = true;
                 if (Terrain.Control == ControlType.ENEMY) {
-                    GetComponent<SpriteRenderer>().color = enemyColor;
+                    renderer.color = enemyColor;
                 } else {
-                    GetComponent<SpriteRenderer>().color = playerColor;
+                    renderer.color = playerColor;
                 }
             }
 		}
