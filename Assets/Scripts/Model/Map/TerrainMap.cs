@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+using Model.Map.Terra;
 
 namespace Model.Map {
     public class TerrainMap {
@@ -14,7 +14,7 @@ namespace Model.Map {
             map = new Terrain[width, height];
             for (var x = 0; x < width; x++) {
                 for (var y = 0; y < height; y++) {
-                    map[x, y] = new Terrain(x, y, TerrainType.GROUND );
+                    map[x, y] = new GroundTerrain(x, y);
                 }
             }
         }

@@ -1,4 +1,5 @@
 using Model.Map;
+using Model.Map.Terra;
 using Model.Unit;
 using Model.Unit.Enemy;
 using Model.Unit.Player;
@@ -28,23 +29,23 @@ namespace Model {
             var map = terraMap.Map;
 
             // TODO load map from file
-            map[2, 9].Type = TerrainType.WATER;
-            map[2, 8].Type = TerrainType.WATER;
-            map[2, 7].Type = TerrainType.WATER;
-            map[2, 6].Type = TerrainType.WATER;
-            map[3, 5].Type = TerrainType.WATER;
-            map[4, 5].Type = TerrainType.WATER;
-            map[5, 4].Type = TerrainType.WATER;
-            map[5, 3].Type = TerrainType.WATER;
-            map[5, 2].Type = TerrainType.WATER;
-            map[6, 1].Type = TerrainType.WATER;
-            map[4, 0].Type = TerrainType.WATER;
-            map[5, 0].Type = TerrainType.WATER;
-            map[6, 0].Type = TerrainType.WATER;
+            map[2, 9] = new WaterTerrain(2, 9);
+            map[2, 8] = new WaterTerrain(2, 8);
+            map[2, 7] = new WaterTerrain(2, 7);
+            map[2, 6] = new WaterTerrain(2, 6);
+            map[3, 5] = new WaterTerrain(3, 5);
+            map[4, 5] = new WaterTerrain(4, 5);
+            map[5, 4] = new WaterTerrain(5, 4);
+            map[5, 3] = new WaterTerrain(5, 3);
+            map[5, 2] = new WaterTerrain(5, 2);
+            map[6, 1] = new WaterTerrain(6, 1);
+            map[4, 0] = new WaterTerrain(4, 0);
+            map[5, 0] = new WaterTerrain(5, 0);
+            map[6, 0] = new WaterTerrain(6, 0);
 
             for (var x = 3; x < 10; x++) {
                 for (var y = 6; y < 10; y++) {
-                    map[x, y].Type = TerrainType.CITY;
+                    map[x, y] = new CityTerrain(x, y);
                 }
             }
             return terraMap;

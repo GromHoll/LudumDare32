@@ -52,8 +52,10 @@ namespace View.Controllers {
             } else {
                 if (selectedUnit != null) {
                     var distance = coord.WorldDistance(selectedUnit.Coord);
-                    if (distance < 1.1f) {
+                    var terra = map.Level.Map.Map[coord.X, coord.Y];
+                    if (distance < 1.1f && terra.IsAvailableForUnit(selectedUnit)) {
                         selectedUnit.Move(coord);
+                        map.Level.UpdateControl();
                         Update();
                         return;
                     }
@@ -71,6 +73,12 @@ namespace View.Controllers {
             if (x < 0 || x >= map.Level.Map.Width || y < 0 || y >= map.Level.Map.Height) {
                 return false;
             }
+
+            var terra = map.Level.Map.Map[x, y];
+            if (!terra.IsAvailableForUnit(selectedUnit)) {
+                return false;
+            }
+
             return map.Level.IsEmptyHex(x, y);
         }
 

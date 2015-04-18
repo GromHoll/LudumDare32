@@ -1,9 +1,10 @@
 ﻿using Common;
 using Model.Map;
+using Model.Map.Terra;
 using System.Collections;
 using UnityEngine;
 using View.Controllers;
-using Terra = Model.Map.Terrain;
+using Terra = Model.Map.Terra.Terrain;
 
 namespace View.Factories {
     public class TerrainFactory : MonoBehaviour {
@@ -28,11 +29,9 @@ namespace View.Factories {
         }
 
         private TerrainController GetPrefab(Terra terrain) {
-            switch (terrain.Type) {
-                case TerrainType.CITY: return cityTerrain;
-                case TerrainType.WATER: return waterTerrain;
-                case TerrainType.GROUND: return groundTerrain;
-            }
+            if (terrain is CityTerrain) {return cityTerrain;}
+            if (terrain is WaterTerrain) {return waterTerrain;}
+            if (terrain is GroundTerrain) {return groundTerrain;}
             return null;
         }
     }

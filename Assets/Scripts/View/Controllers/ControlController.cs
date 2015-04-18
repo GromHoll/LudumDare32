@@ -1,7 +1,8 @@
 ﻿using Model.Map;
+using Model.Map.Terra;
 using System.Collections;
 using UnityEngine;
-using Terra = Model.Map.Terrain;
+using Terra = Model.Map.Terra.Terrain;
 
 namespace View.Controllers {
 	public class ControlController : MonoBehaviour {

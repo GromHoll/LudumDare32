@@ -3,7 +3,6 @@ using Model.Map;
 using System.Collections;
 using UnityEngine;
 using View.Factories;
-using TerraType = Model.Map.TerrainType;
 
 namespace View.Controllers {
     public class MapController : MonoBehaviour {
