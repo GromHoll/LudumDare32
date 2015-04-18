@@ -12,12 +12,18 @@ namespace View.Factories {
         public TerrainController waterTerrain;
         public TerrainController groundTerrain;
 
+        public ControlController control;
+
         public void CreateTerrain(TerrainMap map) {
-            foreach (var terrain in map.Map) {
-                var prefab =  GetPrefab(terrain);
-                var go = GameObjectUtils.InstantiateChild(prefab.gameObject, terrain.Coord.WorldCoord, gameObject);
+            foreach (var terra in map.Map) {
+                var prefab =  GetPrefab(terra);
+                var go = GameObjectUtils.InstantiateChild(prefab.gameObject, terra.Coord.WorldCoord, gameObject);
                 var controller = go.GetComponent<TerrainController>();
-                controller.Terrain = terrain;
+                controller.Terrain = terra;
+
+                var controlGo = GameObjectUtils.InstantiateChild(control.gameObject, terra.Coord.WorldCoord, go);
+                var controlController = controlGo.GetComponent<ControlController>();
+                controlController.Terrain = terra;
             }
         }
 
