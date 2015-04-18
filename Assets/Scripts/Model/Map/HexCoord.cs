@@ -2,7 +2,7 @@ using Common;
 using UnityEngine;
 
 namespace Model.Map {
-    public class Hex {
+    public class HexCoord {
 
         public const float X_SHIFT = 0.750f;
         public const float Y_SHIFT = 0.433f;

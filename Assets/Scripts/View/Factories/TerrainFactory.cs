@@ -2,16 +2,30 @@
 using Model.Map;
 using System.Collections;
 using UnityEngine;
+using Terra = Model.Map.Terrain;
 
 namespace View.Factories {
     public class TerrainFactory : MonoBehaviour {
 
-        public GameObject blankHex;
+        public GameObject cityTerrain;
+        public GameObject waterTerrain;
+        public GameObject groundTerrain;
 
-        public void CreateTerrain(HexMap map) {
-            foreach (var hex in map.Map) {
-                GameObjectUtils.InstantiateChild(blankHex, hex.WorldCoord, gameObject);
+
+        public void CreateTerrain(TerrainMap map) {
+            foreach (var terrain in map.Map) {
+                var prefab =  GetPrefab(terrain);
+                GameObjectUtils.InstantiateChild(prefab, terrain.Coord.WorldCoord, gameObject);
             }
+        }
+
+        private GameObject GetPrefab(Terra terrain) {
+            switch (terrain.Type) {
+                case TerrainType.CITY: return cityTerrain;
+                case TerrainType.WATER: return waterTerrain;
+                case TerrainType.GROUND: return groundTerrain;
+            }
+            return null;
         }
     }
 }
