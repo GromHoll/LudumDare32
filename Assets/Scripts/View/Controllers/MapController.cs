@@ -10,12 +10,14 @@ namespace View.Controllers {
 
         public TerrainFactory terrainFactory;
         public StructuresFactory structuresFactory;
+        public ArmyFactory armyFactory;
 
         void Start() {
             var level = new Level();
             MoveMapToCenter(level.Map);
             terrainFactory.CreateTerrain(level.Map);
             structuresFactory.CreateStructures(level.Enemies);
+            armyFactory.CreateArmy(level.PlayerArmy);
         }
 
         private void MoveMapToCenter(TerrainMap map) {

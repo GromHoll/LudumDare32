@@ -1,6 +1,7 @@
 using Model.Map;
 using Model.Unit;
 using Model.Unit.Enemy;
+using Model.Unit.Player;
 using System.Collections.Generic;
 
 namespace Model {
@@ -11,9 +12,13 @@ namespace Model {
         private List<AbstractUnit> enemies = new List<AbstractUnit>();
         public IList<AbstractUnit> Enemies { get { return enemies; } }
 
+        private List<AbstractUnit> playerArmy = new List<AbstractUnit>();
+        public IList<AbstractUnit> PlayerArmy { get { return playerArmy; } }
+
         public Level() {
             Map =  CreateMap();
             CreateEnemies();
+            CreatePlayerArmy();
             UpdateControl();
         }
 
@@ -55,12 +60,22 @@ namespace Model {
                 new House(6, 6),
                 new House(5, 9)
             };
+        }
 
+        private void CreatePlayerArmy() {
+            playerArmy = new List<AbstractUnit>() {
+                new Airplane(1, 2),
+                new Soldier(1, 1),
+                new Soldier(2, 1),
+                new Soldier(1, 3)
+            };
         }
 
         public void UpdateControl() {
-            foreach (var terra in Map.Map) {
-                terra.Control = ControlType.FREE;
+            foreach (var unit in playerArmy) {
+                foreach (var terra in Map.GetTerrainsInRadius(unit.Coord, unit.ControlRadius)) {
+                    terra.Control = ControlType.PLAYER;
+                }
             }
 
             foreach (var unit in enemies) {
