@@ -34,6 +34,12 @@ namespace View.Controllers {
             if (Level.IsEnd && !end.isActiveAndEnabled) {
                 end.Finish(Level.IsWin);
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                Application.Quit();
+            } else if (Input.GetKeyDown(KeyCode.Space)) {
+                Application.LoadLevel("LevelScene");
+            }
         }
 
         private void MoveMapToCenter(TerrainMap map) {
