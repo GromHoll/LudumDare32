@@ -39,6 +39,12 @@ namespace Model.Unit {
             CurrentMovements = TotalMovements;
         }
 
+        public void Attack() {
+            if (CurrentMovements > 0) {
+                CurrentMovements--;
+            }
+        }
+
         public virtual string ToString() {
             return "Unit: " + Name + "\n" +
                    "Fraction: " + (IsEnemy ? "Enemy" : "Player")+ "\n" +
