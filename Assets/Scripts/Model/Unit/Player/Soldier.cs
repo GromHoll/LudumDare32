@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using Model.Unit.Enemy;
 using System.Collections;
+using UnityEngine;
 
 namespace Model.Unit.Player {
 	public class Soldier : AbstractUnit {
@@ -8,6 +9,8 @@ namespace Model.Unit.Player {
             IsGroundMove = true;
             IsEnemy = false;
         }
+
+        public override void Attack(AbstractEnemy target) {}
 
 	}
 }

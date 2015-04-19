@@ -1,6 +1,8 @@
 ﻿using Model;
 using Model.Map;
+using Model.Unit.Structure;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using View.Factories;
 
@@ -21,7 +23,8 @@ namespace View.Controllers {
             structuresFactory.CreateStructures(Level.Enemies);
             armyFactory.CreateArmy(Level.PlayerArmy);
             armyFactory.CreateArmy(Level.PlayerArmy);
-            roadFactory.CreateRoad(Level.Roads);
+            roadFactory.CreateRoad(Level.Roads.Cast<Connectable>());
+            roadFactory.CreateRoad(Level.Enemies.Cast<Connectable>());
         }
 
         private void MoveMapToCenter(TerrainMap map) {

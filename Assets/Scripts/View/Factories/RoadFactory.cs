@@ -9,7 +9,7 @@ namespace View.Factories {
         public GameObject roadPref;
         public GameObject roadMainPref;
 
-        public void CreateRoad(IList<Road> roads) {
+        public void CreateRoad(IEnumerable<Connectable> roads) {
             foreach (var road in roads) {
                 var roadGo = GameObjectUtils.InstantiateChild(roadMainPref, road.Coord.WorldCoord, gameObject);
 

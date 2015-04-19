@@ -40,7 +40,7 @@ namespace Model.Unit {
             CurrentMovements = TotalMovements;
         }
 
-        public void Attack(AbstractEnemy target) {
+        public virtual void Attack(AbstractEnemy target) {
             if (CurrentMovements > 0) {
                 target.Hit(30);
                 CurrentMovements--;

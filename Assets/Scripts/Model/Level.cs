@@ -65,7 +65,11 @@ namespace Model {
                 new Road(6, 2),
                 new Road(7, 2),
                 new Road(8, 2),
-                new Road(8, 1)
+                new Road(8, 1),
+                new Road(7, 6),
+                new Road(7, 7),
+                new Road(5, 8),
+                new Road(5, 7)
             };
 
 
@@ -140,7 +144,8 @@ namespace Model {
                 new House(7, 8),
                 new House(6, 6),
                 new House(5, 9) ,
-                new Warehouse(4, 4)
+                new Warehouse(4, 4),
+                new Warehouse(8, 6)
             };
         }
 
