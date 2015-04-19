@@ -7,6 +7,7 @@ using Model.Unit.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Model {
     public class Level {
@@ -21,6 +22,9 @@ namespace Model {
 
         private List<Road> roads = new List<Road>();
         public IList<Road> Roads { get { return roads; } }
+
+        public bool IsEnd {get; set; }
+        public bool IsWin {get; set; }
 
         public Level() {
             Map =  CreateMap();
@@ -167,17 +171,20 @@ namespace Model {
                 if (shooted) {
                     if (unit is Airplane && enemy is AntiAir && enemy.ResistanceCurrent > 0) {
                         unit.IsDead = true;
+                        enemy.Shooting();
                         playerArmy.Remove(unit);
                         break;
                     } else if (unit is Soldier && enemy is Bunker && enemy.ResistanceCurrent > 0) {
                         unit.IsDead = true;
+                        enemy.Shooting();
                         playerArmy.Remove(unit);
                         break;
                     }
                 }
             }
-
+            Debug.Log("Army " + playerArmy.Count);
             UpdateControl();
+            CheckEnd();
         }
 
         public void NextTurn() {
@@ -188,6 +195,7 @@ namespace Model {
             foreach (var enemy in enemies) {
                 enemy.CheckSupply();
             }
+            CheckEnd();
         }
 
         public void UpdateControl() {
@@ -209,6 +217,17 @@ namespace Model {
                 Map.Map[unit.Coord.X, unit.Coord.Y].Control = ControlType.ENEMY;
             }
 
+        }
+
+        public void CheckEnd() {
+            if (playerArmy.Count == 0) {
+                IsEnd = true;
+                IsWin = false;
+            }
+            if (enemies.All(unit => unit.ResistanceCurrent <= 0 || unit is Warehouse)) {
+                IsEnd = true;
+                IsWin = true;
+            }
         }
 
         public AbstractUnit GetArmyUnitAt(HexCoord coord) {

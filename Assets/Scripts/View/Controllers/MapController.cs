@@ -5,6 +5,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using View.Factories;
+using View.GUI;
 
 namespace View.Controllers {
     public class MapController : MonoBehaviour {
@@ -13,6 +14,8 @@ namespace View.Controllers {
         public StructuresFactory structuresFactory;
         public ArmyFactory armyFactory;
         public RoadFactory roadFactory;
+
+        public EndController end;
 
         public Level Level { get; set; }
 
@@ -25,6 +28,12 @@ namespace View.Controllers {
             armyFactory.CreateArmy(Level.PlayerArmy);
             roadFactory.CreateRoad(Level.Roads.Cast<Connectable>());
             roadFactory.CreateRoad(Level.Enemies.Cast<Connectable>());
+        }
+
+        void Update() {
+            if (Level.IsEnd && !end.isActiveAndEnabled) {
+                end.Finish(Level.IsWin);
+            }
         }
 
         private void MoveMapToCenter(TerrainMap map) {

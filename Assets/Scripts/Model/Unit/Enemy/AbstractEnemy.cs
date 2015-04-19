@@ -9,6 +9,9 @@ using UnityEngine;
 namespace Model.Unit.Enemy {
 	public abstract class AbstractEnemy : AbstractUnit, Connectable {
 
+        public delegate void Shoot();
+        public event Shoot OnShoot;
+
         public Connectable Up { get; set; }
         public Connectable UpLeft { get; set; }
         public Connectable UpRight { get; set; }
@@ -72,6 +75,10 @@ namespace Model.Unit.Enemy {
             if (IsConnectedToWarehouse(forCheck.UpLeft, alreadyChecked)) { return true; }
 
             return false;
+        }
+
+        public void Shooting() {
+            OnShoot();
         }
 
 	}

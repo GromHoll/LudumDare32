@@ -13,6 +13,7 @@ namespace View.Controllers {
 
         void Start() {
             enemy = (AbstractEnemy) Unit;
+            enemy.OnShoot += Shoot;
         }
 
 		void Update() {
@@ -21,5 +22,20 @@ namespace View.Controllers {
                 GameObjectUtils.InstantiateChild(flag, transform.position, gameObject);
             }
 		}
+
+        void Shoot() {
+            if (attackEffect != null) {
+                StartCoroutine("Shooting");
+            }
+            if (attackSound != null) {
+                AudioSource.PlayClipAtPoint(attackSound, enemy.Coord.WorldCoord);
+            }
+        }
+
+        private IEnumerator Shooting() {
+            var go = GameObjectUtils.InstantiateChildForWorld(attackEffect, enemy.Coord.WorldCoord, gameObject, true);
+            yield return new WaitForSeconds(1.66f);
+            GameObject.Destroy(go);
+        }
 	}
 }

@@ -52,7 +52,7 @@ namespace View.Controllers {
 
         private IEnumerator Explosion() {
             var go = GameObjectUtils.InstantiateChildForWorld(dieEffect, transform.position, gameObject, true);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             gameObject.SetActive(false);
         }
 
