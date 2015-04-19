@@ -1,7 +1,9 @@
 ﻿using Model.Map;
+using Model.Map.Terra;
 using Model.Unit;
 using Model.Unit.Structure;
 using System;
+using System.Collections.Generic;
 
 namespace Model.Unit.Enemy {
 	public abstract class AbstractEnemy : AbstractUnit, Connectable {
@@ -35,5 +37,40 @@ namespace Model.Unit.Enemy {
             "Attack: " + AttackRadius + " hexs\n" +
             "Control: " + ControlRadius + " hexs";
         }
+
+        public void CheckSupply() {
+            if (ResistanceCurrent <= 0) { return; }
+
+            var alreadyChecked = new List<Connectable>();
+            if (!IsConnectedToWarehouse(this, alreadyChecked)) {
+                Hit(10);
+            }
+        }
+
+        private static bool IsConnectedToWarehouse(Connectable forCheck, List<Connectable> alreadyChecked) {
+            if (forCheck == null) { return false; }
+
+            alreadyChecked.Add(forCheck);
+            if (forCheck is Warehouse) {
+                if ((forCheck as Warehouse).ResistanceCurrent > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            if (alreadyChecked.Contains(forCheck)) { return false; }
+            if (forCheck is Road && (forCheck as Road).Terrain.Control == ControlType.PLAYER) { return false; }
+
+
+            if (IsConnectedToWarehouse(forCheck.Up, alreadyChecked)) { return true; }
+            if (IsConnectedToWarehouse(forCheck.UpRight, alreadyChecked)) { return true; }
+            if (IsConnectedToWarehouse(forCheck.DownRight, alreadyChecked)) { return true; }
+            if (IsConnectedToWarehouse(forCheck.Down, alreadyChecked)) { return true; }
+            if (IsConnectedToWarehouse(forCheck.DownLeft, alreadyChecked)) { return true; }
+            if (IsConnectedToWarehouse(forCheck.UpLeft, alreadyChecked)) { return true; }
+
+            return false;
+        }
+
 	}
 }

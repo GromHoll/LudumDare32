@@ -139,7 +139,8 @@ namespace Model {
                 new House(4, 7),
                 new House(7, 8),
                 new House(6, 6),
-                new House(5, 9)
+                new House(5, 9) ,
+                new Warehouse(4, 4)
             };
         }
 
@@ -156,8 +157,9 @@ namespace Model {
             foreach (var unit in playerArmy) {
                 unit.ResetMovements();
             }
-            foreach (var unit in enemies) {
-                unit.ResetMovements();
+
+            foreach (var enemy in enemies) {
+                enemy.CheckSupply();
             }
         }
 

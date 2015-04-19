@@ -11,6 +11,7 @@ namespace View.Factories {
         public GameObject house;
         public GameObject bunker;
         public GameObject antiAir;
+        public GameObject warehouse;
 
         public void CreateStructures(IList<AbstractEnemy> enemies) {
             foreach (var unit in enemies) {
@@ -25,6 +26,7 @@ namespace View.Factories {
             if (unit is AntiAir) { return antiAir; }
             if (unit is Bunker) { return bunker; }
             if (unit is House) { return house; }
+            if (unit is Warehouse) { return warehouse; }
             return null;
         }
 
