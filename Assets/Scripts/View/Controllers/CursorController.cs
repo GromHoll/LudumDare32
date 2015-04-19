@@ -73,7 +73,7 @@ namespace View.Controllers {
 			return Physics2D.Raycast(pos, Vector3.forward, Mathf.Infinity, mask);
         }
 
-        private void Unselect() {
+        public void Unselect() {
             renderer.enabled = false;
             UnselectUnit();
         }

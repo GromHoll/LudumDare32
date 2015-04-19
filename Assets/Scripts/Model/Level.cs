@@ -73,18 +73,34 @@ namespace Model {
             };
         }
 
+        public void NextTurn() {
+            foreach (var unit in playerArmy) {
+                unit.ResetMovements();
+            }
+            foreach (var unit in enemies) {
+                unit.ResetMovements();
+            }
+        }
+
         public void UpdateControl() {
             foreach (var unit in playerArmy) {
                 foreach (var terra in Map.GetTerrainsInRadius(unit.Coord, unit.ControlRadius)) {
                     terra.Control = ControlType.PLAYER;
                 }
             }
-
             foreach (var unit in enemies) {
                 foreach (var terra in Map.GetTerrainsInRadius(unit.Coord, unit.ControlRadius)) {
                     terra.Control = ControlType.ENEMY;
                 }
             }
+
+            foreach (var unit in playerArmy) {
+                Map.Map[unit.Coord.X, unit.Coord.Y].Control = ControlType.PLAYER;
+            }
+            foreach (var unit in enemies) {
+                Map.Map[unit.Coord.X, unit.Coord.Y].Control = ControlType.ENEMY;
+            }
+
         }
 
         public AbstractUnit GetArmyUnitAt(HexCoord coord) {

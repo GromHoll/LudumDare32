@@ -28,5 +28,10 @@ namespace View.Controllers {
             coord.z = -1;
             Camera.main.transform.position = coord;
         }
+
+        public void NextTurn() {
+            Level.NextTurn();
+        }
+
     }
 }
