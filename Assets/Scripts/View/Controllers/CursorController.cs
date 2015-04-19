@@ -47,7 +47,8 @@ namespace View.Controllers {
                     var unitHit = Raycast(UNIT_MASK);
                     if (unitHit.collider != null) {
                         var unit = unitHit.collider.GetComponent<UnitController>();
-                        if (selectedUnit != null && unit != selectedUnit && !selectedUnit.Unit.IsEnemy && unit.Unit.IsEnemy && selectedUnit.Unit.CurrentMovements > 0) {
+                        if (selectedUnit != null && unit != selectedUnit && !selectedUnit.Unit.IsEnemy &&
+                                unit.Unit.IsEnemy && selectedUnit.Unit.CurrentMovements > 0 && IsHexAroundSelection(unit.Unit.Coord) ) {
                             selectedUnit.Attack((AbstractEnemy) unit.Unit);
                             transform.position = selectedUnit.Unit.Coord.WorldCoord;
                             SelectUnit(selectedUnit);

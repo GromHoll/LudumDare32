@@ -4,6 +4,7 @@ using Model.Unit;
 using Model.Unit.Structure;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Model.Unit.Enemy {
 	public abstract class AbstractEnemy : AbstractUnit, Connectable {
@@ -50,15 +51,16 @@ namespace Model.Unit.Enemy {
         private static bool IsConnectedToWarehouse(Connectable forCheck, List<Connectable> alreadyChecked) {
             if (forCheck == null) { return false; }
 
-            alreadyChecked.Add(forCheck);
             if (forCheck is Warehouse) {
                 if ((forCheck as Warehouse).ResistanceCurrent > 0) {
                     return true;
                 } else {
+                    alreadyChecked.Add(forCheck);
                     return false;
                 }
             }
             if (alreadyChecked.Contains(forCheck)) { return false; }
+            alreadyChecked.Add(forCheck);
             if (forCheck is Road && (forCheck as Road).Terrain.Control == ControlType.PLAYER) { return false; }
 
 
