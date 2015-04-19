@@ -6,6 +6,9 @@ namespace Model.Unit.Enemy {
 
         public int ResistanceMax { get; protected set; }
         public int ResistanceCurrent { get; protected set; }
+        public override int ControlRadius {
+            get { return (ResistanceCurrent > 0) ? base.ControlRadius : 0;}
+            set { base.ControlRadius = value; } }
 
         protected AbstractEnemy(int x, int y, int controlRadius, int attackRadius, string name) : base(x, y, controlRadius, attackRadius, 0, name) {
             ResistanceMax = 100;

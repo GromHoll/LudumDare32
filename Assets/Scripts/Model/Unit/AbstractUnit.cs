@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Model.Unit {
     public abstract class AbstractUnit {
 
-        public HexCoord Coord { get; private set; }
-        public int ControlRadius { get; private set; }
-        public int AttackRadius { get; private set; }
+        public HexCoord Coord { get; protected set; }
+        public virtual int ControlRadius { get; set; }
+        public int AttackRadius { get; protected set; }
         public bool IsWaterMove { get; protected set; }
         public bool IsGroundMove { get; protected set; }
         public bool IsEnemy { get; protected set; }
