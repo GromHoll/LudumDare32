@@ -50,9 +50,11 @@ namespace View.Controllers {
                     } else {
                         if (selectedUnit != null) {
                             if (IsHexAroundSelection(terra.Terrain.Coord)) {
-                                selectedUnit.Unit.Move(terra.Terrain.Coord);
-                                map.Level.UpdateControl();
-                                SelectUnit(selectedUnit);
+                                if (selectedUnit.Unit.CurrentMovements > 0) {
+                                    selectedUnit.Unit.Move(terra.Terrain.Coord);
+                                    map.Level.UpdateControl();
+                                    SelectUnit(selectedUnit);
+                                }
                             } else {
                                 UnselectUnit();
                             }
@@ -104,6 +106,9 @@ namespace View.Controllers {
             }
             var terra = map.Level.Map.Map[x, y];
             if (!terra.IsAvailableForUnit(selectedUnit.Unit)) {
+                return false;
+            }
+            if (selectedUnit.Unit.CurrentMovements <= 0) {
                 return false;
             }
             return map.Level.IsEmptyHex(x, y);

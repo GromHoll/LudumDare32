@@ -11,9 +11,13 @@ namespace Model.Unit {
         public bool IsWaterMove { get; protected set; }
         public bool IsGroundMove { get; protected set; }
         public bool IsEnemy { get; protected set; }
+        public int CurrentMovements { get; protected set; }
+        public int TotalMovements { get; protected set; }
 
-        protected AbstractUnit(int x, int y, int controlRadius, int attackRadius) {
+        protected AbstractUnit(int x, int y, int controlRadius, int attackRadius, int movements) {
             Coord = new HexCoord {X = x, Y = y};
+            CurrentMovements = movements;
+            TotalMovements = movements;
             ControlRadius = controlRadius;
             AttackRadius = attackRadius;
             IsGroundMove = false;
@@ -22,9 +26,25 @@ namespace Model.Unit {
         }
 
         public void Move(HexCoord coord) {
-            Coord.X = coord.X;
-            Coord.Y = coord.Y;
+            if (CurrentMovements > 0) {
+                CurrentMovements--;
+                Coord.X = coord.X;
+                Coord.Y = coord.Y;
+            }
         }
 
+        public void ResetMovements() {
+            CurrentMovements = TotalMovements;
+        }
+
+        public string ToString() {
+            return "Unit: Abstract\n" +
+                   "Fraction: " + (IsEnemy ? "Enemy" : "Player")+ "\n" +
+                   "Movements: " + CurrentMovements + "/" + TotalMovements + "\n" +
+                   "Attack: " + AttackRadius + " hexs\n" +
+                   "Control: " + ControlRadius + " hexs\n" +
+                   "Water move: " + IsWaterMove + "\n" +
+                   "Ground move: " + IsGroundMove + "\n";
+        }
     }
 }
