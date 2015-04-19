@@ -159,8 +159,24 @@ namespace Model {
         }
 
         public void Move(AbstractUnit unit, HexCoord target) {
-            // TODO
             unit.Move(target);
+
+            foreach (var enemy in enemies) {
+                var distance = unit.Coord.WorldDistance(enemy.Coord);
+                var shooted = distance < (enemy.AttackRadius + 0.1f);
+                if (shooted) {
+                    if (unit is Airplane && enemy is AntiAir && enemy.ResistanceCurrent > 0) {
+                        unit.IsDead = true;
+                        playerArmy.Remove(unit);
+                        break;
+                    } else if (unit is Soldier && enemy is Bunker && enemy.ResistanceCurrent > 0) {
+                        unit.IsDead = true;
+                        playerArmy.Remove(unit);
+                        break;
+                    }
+                }
+            }
+
             UpdateControl();
         }
 

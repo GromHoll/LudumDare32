@@ -11,7 +11,9 @@ namespace View.Controllers {
         public AbstractUnit Unit { get; set; }
         public AudioClip attackSound;
         public AudioClip moveSound;
+        public AudioClip dieSound;
         public GameObject attackEffect;
+        public GameObject dieEffect;
 
         void Start() {
             Unit.OnUnitMoved += Move;
@@ -40,7 +42,18 @@ namespace View.Controllers {
         }
 
         public void Die() {
-            enabled = false;
+            if (dieSound != null) {
+                AudioSource.PlayClipAtPoint(dieSound, Vector3.zero);
+            }
+            if (dieEffect != null) {
+                StartCoroutine("Explosion");
+            }
+        }
+
+        private IEnumerator Explosion() {
+            var go = GameObjectUtils.InstantiateChildForWorld(dieEffect, transform.position, gameObject, true);
+            yield return new WaitForSeconds(1f);
+            gameObject.SetActive(false);
         }
 
 	}

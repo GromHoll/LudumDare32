@@ -23,7 +23,7 @@ namespace Model.Unit {
         public string Name { get; protected set; }
 
         private bool isDead = false;
-        public bool IsDead { get { return isDead; } set { isDead = isDead & value; OnUnitDie(); } }
+        public bool IsDead { get { return isDead; } set { isDead = value; OnUnitDie(); } }
 
         protected AbstractUnit(int x, int y, int controlRadius, int attackRadius, int movements, string name) {
             Coord = new HexCoord {X = x, Y = y};
