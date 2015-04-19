@@ -107,6 +107,10 @@ namespace Model {
             return playerArmy.FirstOrDefault<AbstractUnit>(unit => unit.Coord.Coord == coord.Coord);
         }
 
+        public AbstractUnit GetEnemyUnitAt(int x, int y) {
+            return enemies.FirstOrDefault<AbstractUnit>(unit => unit.Coord.X == x && unit.Coord.Y == y);
+        }
+
         public bool IsEmptyHex(int x, int y) {
             var unit = enemies.FirstOrDefault<AbstractUnit>(u => u.Coord.X == x && u.Coord.Y == y);
             if (unit != null) { return false; }

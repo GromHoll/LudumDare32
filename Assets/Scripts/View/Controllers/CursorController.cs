@@ -98,6 +98,12 @@ namespace View.Controllers {
         private void UpdateWayHex(GameObject cursor, int x, int y) {
             var renderer = cursor.GetComponent<SpriteRenderer>();
             renderer.enabled = IsRoundCursorNeedsShow(x, y);
+
+            if (map.Level.GetEnemyUnitAt(x, y) != null) {
+                renderer.color = Color.red;
+            } else {
+                renderer.color = Color.green;
+            }
         }
 
         private bool IsRoundCursorNeedsShow(int x, int y) {
@@ -111,6 +117,10 @@ namespace View.Controllers {
             if (selectedUnit.Unit.CurrentMovements <= 0) {
                 return false;
             }
+            if (map.Level.GetEnemyUnitAt(x, y) != null) {
+                return true;
+            }
+
             return map.Level.IsEmptyHex(x, y);
         }
 
