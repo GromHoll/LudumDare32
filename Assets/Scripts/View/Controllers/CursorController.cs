@@ -47,10 +47,9 @@ namespace View.Controllers {
                     if (unitHit.collider != null) {
                         var unit = unitHit.collider.GetComponent<UnitController>();
                         if (selectedUnit != null && unit != selectedUnit && !selectedUnit.Unit.IsEnemy && unit.Unit.IsEnemy && selectedUnit.Unit.CurrentMovements > 0) {
-                            selectedUnit.Unit.Attack();
-                            SelectUnit(selectedUnit);
+                            selectedUnit.Attack();
                             transform.position = selectedUnit.Unit.Coord.WorldCoord;
-                            Debug.Log("ATACK");
+                            SelectUnit(selectedUnit);
                         } else {
                             SelectUnit(unit);
                         }
@@ -58,7 +57,7 @@ namespace View.Controllers {
                         if (selectedUnit != null) {
                             if (IsHexAroundSelection(terra.Terrain.Coord)) {
                                 if (selectedUnit.Unit.CurrentMovements > 0) {
-                                    selectedUnit.Unit.Move(terra.Terrain.Coord);
+                                    selectedUnit.Move(terra.Terrain.Coord);
                                     map.Level.UpdateControl();
                                     SelectUnit(selectedUnit);
                                 }
