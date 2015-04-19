@@ -1,8 +1,17 @@
-﻿using Model.Unit;
+﻿using Model.Map;
+using Model.Unit;
+using Model.Unit.Structure;
 using System;
 
 namespace Model.Unit.Enemy {
-	public abstract class AbstractEnemy : AbstractUnit {
+	public abstract class AbstractEnemy : AbstractUnit, Connectable {
+
+        public Connectable Up { get; set; }
+        public Connectable UpLeft { get; set; }
+        public Connectable UpRight { get; set; }
+        public Connectable Down { get; set; }
+        public Connectable DownLeft { get; set; }
+        public Connectable DownRight { get; set; }
 
         public int ResistanceMax { get; protected set; }
         public int ResistanceCurrent { get; protected set; }

@@ -12,7 +12,7 @@ namespace View.Factories {
         public GameObject bunker;
         public GameObject antiAir;
 
-        public void CreateStructures(IList<AbstractUnit> enemies) {
+        public void CreateStructures(IList<AbstractEnemy> enemies) {
             foreach (var unit in enemies) {
                 var prefab = GetPrefab(unit);
                 var go = GameObjectUtils.InstantiateChild(prefab, unit.Coord.WorldCoord, gameObject);

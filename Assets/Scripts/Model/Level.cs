@@ -3,6 +3,8 @@ using Model.Map.Terra;
 using Model.Unit;
 using Model.Unit.Enemy;
 using Model.Unit.Player;
+using Model.Unit.Structure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,15 +13,19 @@ namespace Model {
 
         public TerrainMap Map { get; private set; }
 
-        private List<AbstractUnit> enemies = new List<AbstractUnit>();
-        public IList<AbstractUnit> Enemies { get { return enemies; } }
+        private List<AbstractEnemy> enemies = new List<AbstractEnemy>();
+        public IList<AbstractEnemy> Enemies { get { return enemies; } }
 
         private List<AbstractUnit> playerArmy = new List<AbstractUnit>();
         public IList<AbstractUnit> PlayerArmy { get { return playerArmy; } }
 
+        private List<Road> roads = new List<Road>();
+        public IList<Road> Roads { get { return roads; } }
+
         public Level() {
             Map =  CreateMap();
             CreateEnemies();
+            CreateRoads();
             CreatePlayerArmy();
             UpdateControl();
         }
@@ -51,8 +57,81 @@ namespace Model {
             return terraMap;
         }
 
+        private void CreateRoads() {
+            roads = new List<Road> {
+                new Road(4, 3),
+                new Road(4, 2),
+                new Road(5, 1),
+                new Road(6, 2),
+                new Road(7, 2),
+                new Road(8, 2),
+                new Road(8, 1)
+            };
+
+
+            foreach (var road in roads) {
+                road.Terrain = Map.Map[road.Coord.X, road.Coord.Y];
+            }
+
+            var connections = new List<Connectable>();
+            connections.AddRange(roads.Cast<Connectable>());
+            connections.AddRange(enemies.Cast<Connectable>());;
+
+            foreach (var conn in connections) {
+                foreach (var aroundConn in connections) {
+                    if (conn.Coord.X == aroundConn.Coord.X) {
+                        if (conn.Coord.Y == aroundConn.Coord.Y + 1) {
+                            conn.Down = aroundConn;
+                        }
+                        if (conn.Coord.Y == aroundConn.Coord.Y - 1){
+                            conn.Up = aroundConn;
+                        }
+
+                    }
+
+                    if (conn.Coord.X%2 == 0) {
+                        if (conn.Coord.X == aroundConn.Coord.X - 1) {
+                            if (conn.Coord.Y == aroundConn.Coord.Y) {
+                                conn.UpRight = aroundConn;
+                            }
+                            if (conn.Coord.Y == aroundConn.Coord.Y + 1) {
+                                conn.DownRight = aroundConn;
+                            }
+                        }
+                        if (conn.Coord.X == aroundConn.Coord.X + 1) {
+                            if (conn.Coord.Y == aroundConn.Coord.Y) {
+                                conn.UpLeft = aroundConn;
+                            }
+                            if (conn.Coord.Y == aroundConn.Coord.Y + 1) {
+                                conn.DownLeft = aroundConn;
+                            }
+                        }
+                    }
+
+                    if (conn.Coord.X%2 == 1) {
+                        if (conn.Coord.X == aroundConn.Coord.X - 1) {
+                            if (conn.Coord.Y == aroundConn.Coord.Y) {
+                                conn.DownRight = aroundConn;
+                            }
+                            if (conn.Coord.Y == aroundConn.Coord.Y - 1) {
+                                conn.UpRight = aroundConn;
+                            }
+                        }
+                        if (conn.Coord.X == aroundConn.Coord.X + 1) {
+                            if (conn.Coord.Y == aroundConn.Coord.Y) {
+                                conn.DownLeft = aroundConn;
+                            }
+                            if (conn.Coord.Y == aroundConn.Coord.Y - 1) {
+                                conn.UpLeft = aroundConn;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void CreateEnemies() {
-            enemies = new List<AbstractUnit>() {
+            enemies = new List<AbstractEnemy>() {
                 new Bunker(7, 0),
                 new Bunker(6, 3),
                 new Bunker(9, 2),
@@ -108,15 +187,15 @@ namespace Model {
         }
 
         public AbstractUnit GetEnemyUnitAt(int x, int y) {
-            return enemies.FirstOrDefault<AbstractUnit>(unit => unit.Coord.X == x && unit.Coord.Y == y);
+            return enemies.FirstOrDefault<AbstractEnemy>(unit => unit.Coord.X == x && unit.Coord.Y == y);
         }
 
         public bool IsEmptyHex(int x, int y) {
-            var unit = enemies.FirstOrDefault<AbstractUnit>(u => u.Coord.X == x && u.Coord.Y == y);
-            if (unit != null) { return false; }
+            var enemyUnit = enemies.FirstOrDefault<AbstractEnemy>(u => u.Coord.X == x && u.Coord.Y == y);
+            if (enemyUnit != null) { return false; }
 
-            unit = playerArmy.FirstOrDefault<AbstractUnit>(u => u.Coord.X == x && u.Coord.Y == y);
-            return (unit == null);
+            var playerUnit = playerArmy.FirstOrDefault<AbstractUnit>(u => u.Coord.X == x && u.Coord.Y == y);
+            return (playerUnit == null);
         }
 
     }

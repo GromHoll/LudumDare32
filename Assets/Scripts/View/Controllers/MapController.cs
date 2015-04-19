@@ -10,6 +10,7 @@ namespace View.Controllers {
         public TerrainFactory terrainFactory;
         public StructuresFactory structuresFactory;
         public ArmyFactory armyFactory;
+        public RoadFactory roadFactory;
 
         public Level Level { get; set; }
 
@@ -19,6 +20,8 @@ namespace View.Controllers {
             terrainFactory.CreateTerrain(Level.Map);
             structuresFactory.CreateStructures(Level.Enemies);
             armyFactory.CreateArmy(Level.PlayerArmy);
+            armyFactory.CreateArmy(Level.PlayerArmy);
+            roadFactory.CreateRoad(Level.Roads);
         }
 
         private void MoveMapToCenter(TerrainMap map) {
