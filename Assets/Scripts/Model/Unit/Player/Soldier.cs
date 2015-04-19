@@ -6,6 +6,7 @@ namespace Model.Unit.Player {
 
         public Soldier(int x, int y) : base(x, y, 0, 0) {
             IsGroundMove = true;
+            IsEnemy = false;
         }
 
 	}

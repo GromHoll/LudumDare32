@@ -10,6 +10,7 @@ namespace Model.Unit {
         public int AttackRadius { get; private set; }
         public bool IsWaterMove { get; protected set; }
         public bool IsGroundMove { get; protected set; }
+        public bool IsEnemy { get; protected set; }
 
         protected AbstractUnit(int x, int y, int controlRadius, int attackRadius) {
             Coord = new HexCoord {X = x, Y = y};
@@ -17,6 +18,7 @@ namespace Model.Unit {
             AttackRadius = attackRadius;
             IsGroundMove = false;
             IsWaterMove = false;
+            IsEnemy = true;
         }
 
         public void Move(HexCoord coord) {

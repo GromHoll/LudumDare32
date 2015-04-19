@@ -7,6 +7,7 @@ namespace Model.Unit.Player {
         public Airplane(int x, int y) : base(x, y, 0, 0) {
             IsGroundMove = true;
             IsWaterMove = true;
+            IsEnemy = false;
         }
 
 	}

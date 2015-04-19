@@ -25,7 +25,7 @@ namespace View.Controllers {
             Vector3 coord = map.Map[map.Width/2, map.Height/2].Coord.WorldCoord;
             coord.y -= HexCoord.Y_SHIFT;
             coord.x -= HexCoord.X_SHIFT;
-            coord.z = -10;
+            coord.z = -1;
             Camera.main.transform.position = coord;
         }
     }
