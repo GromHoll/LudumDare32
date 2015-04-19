@@ -158,6 +158,12 @@ namespace Model {
             };
         }
 
+        public void Move(AbstractUnit unit, HexCoord target) {
+            // TODO
+            unit.Move(target);
+            UpdateControl();
+        }
+
         public void NextTurn() {
             foreach (var unit in playerArmy) {
                 unit.ResetMovements();

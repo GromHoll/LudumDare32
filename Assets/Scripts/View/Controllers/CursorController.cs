@@ -59,9 +59,12 @@ namespace View.Controllers {
                         if (selectedUnit != null) {
                             if (IsHexAroundSelection(terra.Terrain.Coord)) {
                                 if (selectedUnit.Unit.CurrentMovements > 0) {
-                                    selectedUnit.Move(terra.Terrain.Coord);
-                                    map.Level.UpdateControl();
-                                    SelectUnit(selectedUnit);
+                                    map.Level.Move(selectedUnit.Unit, terra.Terrain.Coord);
+                                    if (!selectedUnit.Unit.IsDead) {
+                                        SelectUnit(selectedUnit);
+                                    } else {
+                                        UnselectUnit();
+                                    }
                                 }
                             } else {
                                 UnselectUnit();

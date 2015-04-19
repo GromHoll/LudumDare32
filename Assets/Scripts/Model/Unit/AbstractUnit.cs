@@ -6,6 +6,12 @@ using UnityEngine;
 namespace Model.Unit {
     public abstract class AbstractUnit {
 
+        public delegate void UnitDie();
+        public event UnitDie OnUnitDie;
+
+        public delegate void UnitMove();
+        public event UnitMove OnUnitMoved;
+
         public HexCoord Coord { get; protected set; }
         public virtual int ControlRadius { get; set; }
         public int AttackRadius { get; protected set; }
@@ -15,6 +21,9 @@ namespace Model.Unit {
         public int CurrentMovements { get; protected set; }
         public int TotalMovements { get; protected set; }
         public string Name { get; protected set; }
+
+        private bool isDead = false;
+        public bool IsDead { get { return isDead; } set { isDead = isDead & value; OnUnitDie(); } }
 
         protected AbstractUnit(int x, int y, int controlRadius, int attackRadius, int movements, string name) {
             Coord = new HexCoord {X = x, Y = y};
@@ -33,6 +42,7 @@ namespace Model.Unit {
                 CurrentMovements--;
                 Coord.X = coord.X;
                 Coord.Y = coord.Y;
+                OnUnitMoved();
             }
         }
 

@@ -13,6 +13,11 @@ namespace View.Controllers {
         public AudioClip moveSound;
         public GameObject attackEffect;
 
+        void Start() {
+            Unit.OnUnitMoved += Move;
+            Unit.OnUnitDie += Die;
+        }
+
         void Update() {
             transform.position = Unit.Coord.WorldCoord;
         }
@@ -28,11 +33,14 @@ namespace View.Controllers {
             Unit.Attack(target);
         }
 
-        public void Move(HexCoord coord) {
+        public void Move() {
             if (moveSound != null) {
                 AudioSource.PlayClipAtPoint(moveSound, Vector3.zero);
             }
-            Unit.Move(coord);
+        }
+
+        public void Die() {
+            enabled = false;
         }
 
 	}
