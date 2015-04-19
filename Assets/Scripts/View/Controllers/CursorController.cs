@@ -42,6 +42,7 @@ namespace View.Controllers {
                     var terra = terraHit.collider.GetComponent<TerrainController>();
                     renderer.enabled = true;
                     transform.position = terra.Terrain.Coord.WorldCoord;
+                    OnTerraSelected(terra);
 
                     var unitHit = Raycast(UNIT_MASK);
                     if (unitHit.collider != null) {
@@ -50,12 +51,10 @@ namespace View.Controllers {
                     } else {
                         if (selectedUnit != null) {
                             if (IsHexAroundSelection(terra.Terrain.Coord)) {
-                                Debug.Log("Around");
                                 selectedUnit.Unit.Move(terra.Terrain.Coord);
                                 map.Level.UpdateControl();
                                 SelectUnit(selectedUnit);
                             } else {
-                                Debug.Log("Not around");
                                 UnselectUnit();
                             }
                         } else {
