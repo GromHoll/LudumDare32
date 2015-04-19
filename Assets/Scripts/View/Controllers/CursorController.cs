@@ -1,6 +1,7 @@
 using Model;
 using Model.Map;
 using Model.Unit;
+using Model.Unit.Enemy;
 using UnityEngine;
 
 namespace View.Controllers {
@@ -47,7 +48,7 @@ namespace View.Controllers {
                     if (unitHit.collider != null) {
                         var unit = unitHit.collider.GetComponent<UnitController>();
                         if (selectedUnit != null && unit != selectedUnit && !selectedUnit.Unit.IsEnemy && unit.Unit.IsEnemy && selectedUnit.Unit.CurrentMovements > 0) {
-                            selectedUnit.Attack();
+                            selectedUnit.Attack((AbstractEnemy) unit.Unit);
                             transform.position = selectedUnit.Unit.Coord.WorldCoord;
                             SelectUnit(selectedUnit);
                         } else {

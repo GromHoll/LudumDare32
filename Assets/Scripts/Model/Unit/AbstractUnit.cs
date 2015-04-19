@@ -1,4 +1,5 @@
 ﻿using Model.Map;
+using Model.Unit.Enemy;
 using System.Collections;
 using UnityEngine;
 
@@ -39,8 +40,9 @@ namespace Model.Unit {
             CurrentMovements = TotalMovements;
         }
 
-        public void Attack() {
+        public void Attack(AbstractEnemy target) {
             if (CurrentMovements > 0) {
+                target.Hit(30);
                 CurrentMovements--;
             }
         }
