@@ -19,6 +19,7 @@ namespace View.GUI {
                 var image = GetComponent<Image>();
                 image.sprite = terrain.GetComponent<SpriteRenderer>().sprite;
                 image.color = terrain.GetComponent<SpriteRenderer>().color;
+                text.text = terrain.Terrain.ToString();
             }
         }
 
