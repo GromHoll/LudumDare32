@@ -1,7 +1,7 @@
 namespace Model.Unit.Enemy {
-    public class House : AbstractUnit {
+    public class House : AbstractEnemy {
 
-        public House(int x, int y) : base(x, y, 0, 0, 0, "Citizen house") {}
+        public House(int x, int y) : base(x, y, 0, 0, "Citizen house") {}
 
     }
 }

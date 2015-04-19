@@ -39,7 +39,7 @@ namespace Model.Unit {
             CurrentMovements = TotalMovements;
         }
 
-        public string ToString() {
+        public virtual string ToString() {
             return "Unit: " + Name + "\n" +
                    "Fraction: " + (IsEnemy ? "Enemy" : "Player")+ "\n" +
                    "Movements: " + CurrentMovements + "/" + TotalMovements + "\n" +
